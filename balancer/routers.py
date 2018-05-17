@@ -14,7 +14,7 @@ class BasePoolRouter(object):
     def __init__(self):
         from django.conf import settings
         if isinstance(settings.DATABASE_POOL, dict):
-            self.pool = settings.DATABASE_POOL.keys()
+            self.pool = list(settings.DATABASE_POOL.keys())
         else:
             self.pool = list(settings.DATABASE_POOL)
 
@@ -54,10 +54,10 @@ class WeightedRandomRouter(RandomRouter):
 
     def __init__(self):
         from django.conf import settings
-        self.pool = settings.DATABASE_POOL.keys()
+        self.pool = list(settings.DATABASE_POOL.keys())
         self.totals = []
 
-        weights = settings.DATABASE_POOL.values()
+        weights = list(settings.DATABASE_POOL.values())
         running_total = 0
 
         for w in weights:
